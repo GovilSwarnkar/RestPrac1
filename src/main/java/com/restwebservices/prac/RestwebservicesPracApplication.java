@@ -35,4 +35,8 @@ public class RestwebservicesPracApplication {
 		return acceptHeaderLocaleResolver;
 	}
 
+	
+	//http://localhost:8080/actuator
+	//http://localhost:8080/ - hal browser
+	//http://localhost:8080/actuator/metrics/jvm.memory.used in hal and many example
 }
