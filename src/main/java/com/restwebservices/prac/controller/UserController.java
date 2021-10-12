@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.restwebservices.prac.bean.User;
 import com.restwebservices.prac.dao.service.UserDaoService;
+import com.restwebservices.prac.exception.UserNotFoundException;
 
 @RestController
 public class UserController {
@@ -28,7 +29,11 @@ public class UserController {
 
 	@GetMapping("/users/{id}")
 	public User retreiveUser(@PathVariable Integer id) {
-		return  userDaoService.findById(id);
+		User user =   userDaoService.findById(id);
+		if(user == null) {
+			throw new UserNotFoundException("id -> " + id);
+		}
+		return user;
 	}
 	
 	@PostMapping("/users")
