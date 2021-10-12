@@ -2,8 +2,10 @@ package com.restwebservices.prac.exception;
 
 import java.time.LocalDateTime;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,4 +29,12 @@ public class CustomReponseEntityExceptionHandler extends ResponseEntityException
 				new ExceptionReponse(LocalDateTime.now(), ex.getMessage(), request.getDescription(false)),
 				HttpStatus.NOT_FOUND);
 	}
+	
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(
+			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+		return new ResponseEntity<Object>(
+				new ExceptionReponse(LocalDateTime.now(), "Validation failed", ex.getBindingResult().toString()),
+				HttpStatus.BAD_REQUEST);
+	}
+
 }
