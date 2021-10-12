@@ -23,6 +23,10 @@ import com.restwebservices.prac.bean.User;
 import com.restwebservices.prac.dao.service.UserDaoService;
 import com.restwebservices.prac.exception.UserNotFoundException;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 public class UserController {
 
@@ -49,6 +53,14 @@ public class UserController {
 	}
 	
 	@PostMapping("/users")
+	@ApiOperation(value = "Endpoint to create new user", notes = "This endpoint is added to createUser in controlled and automated way")
+	@ApiResponses(value = {@ApiResponse(responseCode = "201",  description  = "User created successfully."),
+			@ApiResponse(responseCode = "500",  description  = "Internal server error."),
+			@ApiResponse(responseCode = "400",  description  = "Bad Request. Input invalid."),
+			@ApiResponse(responseCode = "401",  description  = "The requested completed successfully."),
+			@ApiResponse(responseCode = "401",  description  = "Not authenticated. User session invalid."),
+			@ApiResponse(responseCode = "403",  description  = "Not authorized."),
+			@ApiResponse(responseCode = "200",  description  = "Request Accepted.")})
 	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
 		userDaoService.saveUser(user);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
